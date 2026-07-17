@@ -31,7 +31,7 @@ A Next.js sample project built on top of Kontent.ai. It mirrors the Karma health
    ```sh
    npm ci
    ```
-3. Create a `.env.local` file from `.env.template` and fill in the Kontent.ai and Auth0 values. At minimum you need `KONTENT_ENVIRONMENT_ID`, `KONTENT_DELIVERY_API_KEY`, `AUTH0_DOMAIN`, `AUTH0_CLIENT_ID`, `APP_BASE_URL`, and `SESSION_PASSWORD`.
+3. Create a `.env.local` file from `.env.template` and fill in the Kontent.ai and Auth0 values. At minimum you need `KONTENT_ENVIRONMENT_ID`, `KONTENT_DELIVERY_API_KEY`, `AUTH0_DOMAIN`, `AUTH0_CLIENT_ID`, and `SESSION_PASSWORD`. The app derives its own public URL from each request, so every origin you serve it from (localhost, production, preview deployments) must be listed in the Auth0 application's Allowed Callback URLs (`<origin>/callback`) and Allowed Logout URLs (`<origin>`); Auth0 supports subdomain wildcards for preview deployments.
 4. Run the app
    ```sh
    npm run dev
