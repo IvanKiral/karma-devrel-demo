@@ -1,6 +1,6 @@
 import { cookies, draftMode } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
-import { getAuth0Config } from "@/lib/auth0/config.ts";
+import { getRequestOrigin } from "@/lib/requestOrigin.ts";
 import { sanitizeReturnTo } from "@/lib/sanitizeReturnTo.ts";
 
 // Next.js sets __prerender_bypass with SameSite=Lax by default, which blocks
@@ -25,5 +25,5 @@ export async function GET(req: NextRequest) {
   }
 
   const returnTo = sanitizeReturnTo(req.nextUrl.searchParams.get("returnTo"));
-  return NextResponse.redirect(new URL(returnTo, getAuth0Config().appBaseUrl));
+  return NextResponse.redirect(new URL(returnTo, getRequestOrigin(req)));
 }

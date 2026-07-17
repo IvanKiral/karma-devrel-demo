@@ -24,13 +24,15 @@ const getConfig = async (): Promise<client.Configuration> => {
   return await created;
 };
 
-const getRedirectUri = () => `${getAuth0Config().appBaseUrl}/callback`;
-
 type StartLoginArgs = Readonly<{
   returnTo: string;
+  origin: string;
 }>;
 
-export const buildAuthorizationUrl = async ({ returnTo }: StartLoginArgs): Promise<string> => {
+export const buildAuthorizationUrl = async ({
+  returnTo,
+  origin,
+}: StartLoginArgs): Promise<string> => {
   const config = await getConfig();
   const codeVerifier = client.randomPKCECodeVerifier();
   const codeChallenge = await client.calculatePKCECodeChallenge(codeVerifier);
@@ -45,7 +47,7 @@ export const buildAuthorizationUrl = async ({ returnTo }: StartLoginArgs): Promi
   await loginFlow.save();
 
   const url = client.buildAuthorizationUrl(config, {
-    redirect_uri: getRedirectUri(),
+    redirect_uri: `${origin}/callback`,
     scope: DEFAULT_SCOPE,
     audience: KONTENT_AUDIENCE,
     code_challenge: codeChallenge,
